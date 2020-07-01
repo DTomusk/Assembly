@@ -17,8 +17,8 @@ _start:
 read: 
 	mov 	rax, 0
 	mov 	rdi, 1
-	mov	rsi, inp 
-	mov	rdx, 64
+	mov	rsi, inp 	; so we give rsi the address allocated to inp and tell it to write 256 bytes into memory starting from that address
+	mov	rdx, 256	; need to test 
 	syscall
 	
 	ret
@@ -26,7 +26,7 @@ read:
 write: 
 	mov	rax, 1
 	mov	rdi, 1
-	mov	rsi, inp
+	mov	rsi, inp	; not sure how syscall 1 works, if I give it the address of inp and len will it read len bytes starting from inp? I imagine that's how it's done 
 	mov 	rdx, len
 	syscall 
 	
@@ -34,7 +34,7 @@ write:
 	
 get_len:
 	inc	rax		; doesn't yet check for zero length, if zero returns one 
-	cmp 	byte [inp + rax], 0 ; at least I think it's plus 
+	cmp 	byte [inp + rax], 0
 	
 	jnz	get_len 	; jump if the next byte isn't zero 
 	
